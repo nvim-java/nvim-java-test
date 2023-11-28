@@ -3,11 +3,13 @@ local log = require('java-core.utils.log')
 
 local TestParser = require('java-test.results.test-parser')
 
----@class java_test.DapTestReport
+---@class java_test.JUnitTestReport
 ---@field private conn uv_tcp_t
 ---@field private test_parser java_test.TestParser
 local TestReport = class()
 
+---Init
+---@private
 function TestReport:_init()
 	self.conn = nil
 	self.test_parser = TestParser()
@@ -46,6 +48,9 @@ end
 ---Runs on connection close
 ---@private
 function TestReport:on_close()
+	local results = self.test_parser:get_test_details()
+	vim.print(results)
+	-- vim.print(vim.lsp.get_active_clients({ name = 'jdtls' })[1])
 	vim.print('closing')
 end
 
