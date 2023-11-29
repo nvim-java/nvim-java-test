@@ -1,12 +1,11 @@
 local class = require('java-core.utils.class')
-local str_util = require('java-test.utils.str')
 
 local MessageId = require('java-test.results.message-id')
 local TestStatus = require('java-test.results.test-status')
 local TestExecStatus = require('java-test.results.test-execution-status')
 
 ---@class java_test.TestParser
----@field private test_details java_test.TestDetails
+---@field private test_details java_test.TestResults[]
 local TestParser = class()
 
 ---Init
@@ -23,11 +22,11 @@ TestParser.node_parsers = {
 	[MessageId.TestFailed] = 'parse_test_failed',
 }
 
----Returns the parsed test details
----@return java_test.TestDetails # parsed test details
-function TestParser:get_test_details()
-	return self.test_details
-end
+---@private
+TestParser.strtobool = {
+	['true'] = true,
+	['false'] = false,
+}
 
 ---Parse a given text into test details
 ---@param text string test result buffer
@@ -58,14 +57,20 @@ function TestParser:parse(text)
 	end
 end
 
+---Returns the parsed test details
+---@return java_test.TestResults # parsed test details
+function TestParser:get_test_details()
+	return self.test_details
+end
+
 ---@private
 function TestParser:parse_test_tree(data)
 	local node = {
 		test_id = tonumber(data[1]),
 		test_name = data[2],
-		is_suite = data[3],
+		is_suite = TestParser.strtobool[data[3]],
 		test_count = tonumber(data[4]),
-		is_dynamic_test = data[5],
+		is_dynamic_test = TestParser.strtobool[data[5]],
 		parent_id = tonumber(data[6]),
 		display_name = data[7],
 		parameter_types = data[8],
@@ -115,30 +120,31 @@ function TestParser:parse_test_failed(data, line_iter)
 		end
 
 		-- EXPECTED
-		if str_util.starts_with(line, MessageId.ExpectStart) then
+		if vim.startswith(line, MessageId.ExpectStart) then
 			node.result.expected =
 				self:get_content_until_end_tag(MessageId.ExpectEnd, line_iter)
 
 		-- ACTUAL
-		elseif str_util.starts_with(line, MessageId.ActualStart) then
+		elseif vim.startswith(line, MessageId.ActualStart) then
 			node.result.actual =
 				self:get_content_until_end_tag(MessageId.ActualEnd, line_iter)
 
 		-- TRACE
-		elseif str_util.starts_with(line, MessageId.TraceStart) then
+		elseif vim.startswith(line, MessageId.TraceStart) then
 			node.result.trace =
 				self:get_content_until_end_tag(MessageId.TraceEnd, line_iter)
 		end
 	end
 end
 
+---@private
 function TestParser:get_content_until_end_tag(end_tag, line_iter)
 	local content = {}
 
 	while true do
 		local line = line_iter()
 
-		if line == nil or str_util.starts_with(line, end_tag) then
+		if line == nil or vim.startswith(line, end_tag) then
 			break
 		end
 
@@ -172,3 +178,23 @@ function TestParser:find_result_node(id)
 end
 
 return TestParser
+
+---@class java_test.TestResultExecutionDetails
+---@field actual string[] lines
+---@field expected string[] lines
+---@field status java_test.TestStatus
+---@field execution java_test.TestExecutionStatus
+---@field trace string[] lines
+
+---@class java_test.TestResults
+---@field display_name string
+---@field is_dynamic_test boolean
+---@field is_suite boolean
+---@field parameter_types string
+---@field parent_id integer
+---@field test_count integer
+---@field test_id integer
+---@field test_name string
+---@field unique_id string
+---@field result java_test.TestResultExecutionDetails
+---@field children java_test.TestResults[]
