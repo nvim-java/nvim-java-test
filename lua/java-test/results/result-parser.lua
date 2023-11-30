@@ -1,8 +1,8 @@
 local class = require('java-core.utils.class')
 
 local MessageId = require('java-test.results.message-id')
-local TestStatus = require('java-test.results.test-status')
-local TestExecStatus = require('java-test.results.test-execution-status')
+local TestStatus = require('java-test.results.result-status')
+local TestExecStatus = require('java-test.results.execution-status')
 
 ---@class java_test.TestParser
 ---@field private test_details java_test.TestResults[]

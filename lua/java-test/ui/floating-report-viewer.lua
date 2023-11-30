@@ -1,13 +1,13 @@
 local class = require('java-core.utils.class')
 local StringBuilder = require('java-test.utils.string-builder')
-local TestExecutionStatus = require('java-test.results.test-execution-status')
-local TestStatus = require('java-test.results.test-status')
+local TestStatus = require('java-test.results.result-status')
+local ReportViewer = require('java-test.ui.report-viewer')
 
 ---@class java_test.FloatingReportViewer
 ---@field window number|nil
 ---@field buffer number|nil
 ---@overload fun(): java_test.FloatingReportViewer
-local FloatingReportViewer = class()
+local FloatingReportViewer = class(ReportViewer)
 
 ---Shows the test results in a floating window
 ---@param test_results java_test.TestResults[]
@@ -67,10 +67,6 @@ function FloatingReportViewer:show_in_window(content)
 			width = '80%',
 			height = '60%',
 		},
-		buf_options = {
-			modifiable = true,
-			readonly = true,
-		},
 		win_options = {
 			foldmethod = 'indent',
 			foldlevel = 1,
@@ -87,7 +83,9 @@ function FloatingReportViewer:show_in_window(content)
 
 	-- set content
 	vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, content)
-	vim.api.nvim_buf_set_option(popup.bufnr, 'modifiable', false)
+
+	vim.bo[popup.bufnr].modifiable = false
+	vim.bo[popup.bufnr].readonly = true
 end
 
 return FloatingReportViewer

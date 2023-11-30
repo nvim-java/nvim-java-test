@@ -1,5 +1,5 @@
 local class = require('java-core.utils.class')
-local TestParser = require('java-test.results.test-parser')
+local TestParser = require('java-test.results.result-parser')
 
 ---@class java_test.TestParserFactory
 local TestParserFactory = class()

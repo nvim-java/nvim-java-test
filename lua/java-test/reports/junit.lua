@@ -1,20 +1,31 @@
 local class = require('java-core.utils.class')
 local log = require('java-core.utils.log')
 
-local ReportViewer = require('java-test.ui.floating-report-viewer')
-
 ---@class java_test.JUnitTestReport
 ---@field private conn uv_tcp_t
----@field private test_parser java_test.TestParser
----@field private test_parser_fac java_test.TestParserFactory
----@overload fun(test_parser_factory: java_test.TestParserFactory)
+---@field private result_parser java_test.TestParser
+---@field private result_parser_fac java_test.TestParserFactory
+---@field private report_viewer java_test.ReportViewer
+---@overload fun(result_parser_factory: java_test.TestParserFactory, test_viewer: java_test.ReportViewer)
 local JUnitReport = class()
 
 ---Init
----@param test_parser_factory java_test.TestParserFactory
-function JUnitReport:_init(test_parser_factory)
+---@param result_parser_factory java_test.TestParserFactory
+function JUnitReport:_init(result_parser_factory, report_viewer)
 	self.conn = nil
-	self.test_parser_fac = test_parser_factory
+	self.result_parser_fac = result_parser_factory
+	self.report_viewer = report_viewer
+end
+
+---Returns the test results
+---@return java_test.TestResults[]
+function JUnitReport:get_results()
+	return self.result_parser:get_test_details()
+end
+
+---Shows the test report
+function JUnitReport:show_report()
+	self.report_viewer:show(self:get_results())
 end
 
 ---Returns a stream reader function
@@ -22,7 +33,7 @@ end
 ---@return fun(err: string, buffer: string) # callback function
 function JUnitReport:get_stream_reader(conn)
 	self.conn = conn
-	self.test_parser = self.test_parser_fac:get_parser()
+	self.result_parser = self.result_parser_fac:get_parser()
 
 	return vim.schedule_wrap(function(err, buffer)
 		if err then
@@ -45,16 +56,12 @@ end
 ---@private
 ---@param text string
 function JUnitReport:on_update(text)
-	self.test_parser:parse(text)
+	self.result_parser:parse(text)
 end
 
 ---Runs on connection close
 ---@private
-function JUnitReport:on_close()
-	local results = self.test_parser:get_test_details()
-	local rv = ReportViewer()
-	rv:show(results)
-end
+function JUnitReport:on_close() end
 
 ---Runs on connection error
 ---@private
