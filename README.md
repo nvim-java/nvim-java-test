@@ -6,6 +6,6 @@
 ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
 ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
 
-This project includes anything and everything to do with starting & communicating to Jdtls
+This project includes anything and everything to do with testing Java applications
 
 ## Head on to main project [:coffee: nvim-java](https://github.com/nvim-java/nvim-java)
