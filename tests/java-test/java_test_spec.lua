@@ -1,7 +1,5 @@
-local plugin = require('java-test')
-
 describe('java-test', function()
 	it('java-test module is available', function()
-		assert('module available', plugin)
+		assert('module available', require('java-test'))
 	end)
 end)
