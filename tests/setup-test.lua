@@ -1,3 +1,10 @@
+---@diagnostic disable: assign-type-mismatch
+---@param path string
+---@return string|nil
+local function local_plug(path)
+	return vim.fn.isdirectory(path) == 1 and path or nil
+end
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
 if not vim.loop.fs_stat(lazypath) then
@@ -18,6 +25,19 @@ local temp_path = './.test_plugins'
 require('lazy').setup({
 	{
 		'nvim-lua/plenary.nvim',
+		lazy = false,
+	},
+	{
+		'nvim-java/nvim-java-core',
+		dir = local_plug('~/Workspace/nvim-java-core'),
+		lazy = false,
+	},
+	{
+		'neovim/nvim-lspconfig',
+		lazy = false,
+	},
+	{
+		'williamboman/mason.nvim',
 		lazy = false,
 	},
 }, {

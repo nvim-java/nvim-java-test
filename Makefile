@@ -1,5 +1,5 @@
-PREPARE_CONFIG=tests/prepare-config.lua
-TEST_CONFIG=tests/test-config.lua
+SETUP_TEST=tests/setup-test.lua
+BEFORE_TEST=tests/before-test.lua
 TESTS_DIR=tests/
 
 .PHONY: test
@@ -7,5 +7,5 @@ TESTS_DIR=tests/
 test:
 	@nvim \
 		--headless \
-		-u ${PREPARE_CONFIG} \
-		"+PlenaryBustedDirectory ${TESTS_DIR} { minimal_init = '${TEST_CONFIG}' }"
+		-u ${SETUP_TEST} \
+		"+PlenaryBustedDirectory ${TESTS_DIR} { minimal_init = '${BEFORE_TEST}' }"
