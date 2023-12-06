@@ -22,17 +22,17 @@ function FloatingReportViewer:show(test_results)
 			tc.append(prefix .. indentation)
 
 			if result.is_suite then
-				tc.append('📁 ' .. result.test_name).lbreak()
+				tc.append(' ' .. result.test_name).lbreak()
 			else
 				if result.result.status == TestStatus.Failed then
-					tc.append('❌' .. result.test_name)
+					tc.append('󰅙 ' .. result.test_name)
 						.lbreak()
 						.append(indentation)
 						.append(result.result.trace, indentation)
 				elseif result.result.status == TestStatus.Skipped then
-					tc.append('⚠ ' .. result.test_name).lbreak()
+					tc.append(' ' .. result.test_name).lbreak()
 				else
-					tc.append('✅' .. result.test_name).lbreak()
+					tc.append(' ' .. result.test_name).lbreak()
 				end
 			end
 
