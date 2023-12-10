@@ -48,10 +48,10 @@ function FloatingReportViewer:show(test_results)
 
 	local res = build_result(test_results, '', '')
 
-	self:show_in_window(vim.split(res, '\n'))
+	FloatingReportViewer.show_in_window(vim.split(res, '\n'))
 end
 
-function FloatingReportViewer:show_in_window(content)
+function FloatingReportViewer.show_in_window(content)
 	local Popup = require('nui.popup')
 	local event = require('nui.utils.autocmd').event
 

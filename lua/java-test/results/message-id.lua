@@ -27,20 +27,4 @@ local MessageId = {
 	ASSUMPTION_FAILED_TEST_PREFIX = '@AssumptionFailure: ',
 }
 
---[[
-*************
-%TESTC  2 v2
-%TSTTREE2,com.example.demo.DemoApplicationTests,true,2,false,1,DemoApplicationTests,,[engine:junit-jupiter]/[class:com.example.demo.DemoApplicationTests]
-%TSTTREE3,anotherTest(com.example.demo.DemoApplicationTests),false,1,false,2,anotherTest(),,[engine:junit-jupiter]/[class:com.example.demo.DemoApplicationTests]/[method:anotherTest()]
-%TSTTREE4,contextLoads(com.example.demo.DemoApplicationTests),false,1,false,2,contextLoads(),,[engine:junit-jupiter]/[class:com.example.demo.DemoApplicationTests]/[method:contextLoads()]
-%TESTS  3,anotherTest(com.example.demo.DemoApplicationTests)
-*************
-%TESTE  3,anotherTest(com.example.demo.DemoApplicationTests)
-*************
-%TESTS  4,contextLoads(com.example.demo.DemoApplicationTests)
-*************
-%TESTE  4,contextLoads(com.example.demo.DemoApplicationTests)
-%RUNTIME2281
---]]
-
 return MessageId

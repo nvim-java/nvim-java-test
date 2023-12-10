@@ -122,23 +122,23 @@ function TestParser:parse_test_failed(data, line_iter)
 		-- EXPECTED
 		if vim.startswith(line, MessageId.ExpectStart) then
 			node.result.expected =
-				self:get_content_until_end_tag(MessageId.ExpectEnd, line_iter)
+				TestParser.get_content_until_end_tag(MessageId.ExpectEnd, line_iter)
 
 		-- ACTUAL
 		elseif vim.startswith(line, MessageId.ActualStart) then
 			node.result.actual =
-				self:get_content_until_end_tag(MessageId.ActualEnd, line_iter)
+				TestParser.get_content_until_end_tag(MessageId.ActualEnd, line_iter)
 
 		-- TRACE
 		elseif vim.startswith(line, MessageId.TraceStart) then
 			node.result.trace =
-				self:get_content_until_end_tag(MessageId.TraceEnd, line_iter)
+				TestParser.get_content_until_end_tag(MessageId.TraceEnd, line_iter)
 		end
 	end
 end
 
 ---@private
-function TestParser:get_content_until_end_tag(end_tag, line_iter)
+function TestParser.get_content_until_end_tag(end_tag, line_iter)
 	local content = {}
 
 	while true do
