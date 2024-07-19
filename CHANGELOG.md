@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/nvim-java/nvim-java-test/compare/v1.0.0...v1.0.1) (2024-07-19)
+
+
+### Bug Fixes
+
+* report is not showing up ([1230269](https://github.com/nvim-java/nvim-java-test/commit/123026974521c83b0d0c58089668805c975ef311))
+
 ## 1.0.0 (2023-12-10)
 
 
