@@ -11,7 +11,7 @@ local FloatingReportViewer = class(ReportViewer)
 
 ---Shows the test results in a floating window
 ---@param test_results java-test.TestResults[]
-function FloatingReportViewer.show(test_results)
+function FloatingReportViewer:show(test_results)
 	---@param results java-test.TestResults[]
 	local function build_result(results, indentation, prefix)
 		local ts = StringBuilder()
