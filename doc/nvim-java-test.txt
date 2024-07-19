@@ -1,10 +1,11 @@
-*nvim-java-test.txt*     For Neovim >= 0.9.4     Last change: 2023 December 10
+*nvim-java-test.txt*       For Neovim >= 0.9.4       Last change: 2024 July 19
 
 ==============================================================================
 Table of Contents                           *nvim-java-test-table-of-contents*
 
 1. nvim-java-test                              |nvim-java-test-nvim-java-test|
   - Head on to main project nvim-java|nvim-java-test-head-on-to-main-project-nvim-java|
+2. Links                                                |nvim-java-test-links|
 
 ==============================================================================
 1. nvim-java-test                              *nvim-java-test-nvim-java-test*
