@@ -1,16 +1,16 @@
 local class = require('java-core.utils.class')
 local log = require('java-core.utils.log')
 
----@class java_test.JUnitTestReport
+---@class java-test.JUnitTestReport
 ---@field private conn uv_tcp_t
----@field private result_parser java_test.TestParser
----@field private result_parser_fac java_test.TestParserFactory
----@field private report_viewer java_test.ReportViewer
----@overload fun(result_parser_factory: java_test.TestParserFactory, test_viewer: java_test.ReportViewer)
+---@field private result_parser java-test.TestParser
+---@field private result_parser_fac java-test.TestParserFactory
+---@field private report_viewer java-test.ReportViewer
+---@overload fun(result_parser_factory: java-test.TestParserFactory, test_viewer: java-test.ReportViewer)
 local JUnitReport = class()
 
 ---Init
----@param result_parser_factory java_test.TestParserFactory
+---@param result_parser_factory java-test.TestParserFactory
 function JUnitReport:_init(result_parser_factory, report_viewer)
 	self.conn = nil
 	self.result_parser_fac = result_parser_factory
@@ -18,7 +18,7 @@ function JUnitReport:_init(result_parser_factory, report_viewer)
 end
 
 ---Returns the test results
----@return java_test.TestResults[]
+---@return java-test.TestResults[]
 function JUnitReport:get_results()
 	return self.result_parser:get_test_details()
 end

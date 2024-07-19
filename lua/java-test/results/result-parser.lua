@@ -4,8 +4,8 @@ local MessageId = require('java-test.results.message-id')
 local TestStatus = require('java-test.results.result-status')
 local TestExecStatus = require('java-test.results.execution-status')
 
----@class java_test.TestParser
----@field private test_details java_test.TestResults[]
+---@class java-test.TestParser
+---@field private test_details java-test.TestResults[]
 local TestParser = class()
 
 ---Init
@@ -58,7 +58,7 @@ function TestParser:parse(text)
 end
 
 ---Returns the parsed test details
----@return java_test.TestResults # parsed test details
+---@return java-test.TestResults # parsed test details
 function TestParser:get_test_details()
 	return self.test_details
 end
@@ -179,14 +179,14 @@ end
 
 return TestParser
 
----@class java_test.TestResultExecutionDetails
+---@class java-test.TestResultExecutionDetails
 ---@field actual string[] lines
 ---@field expected string[] lines
----@field status java_test.TestStatus
----@field execution java_test.TestExecutionStatus
+---@field status java-test.TestStatus
+---@field execution java-test.TestExecutionStatus
 ---@field trace string[] lines
 
----@class java_test.TestResults
+---@class java-test.TestResults
 ---@field display_name string
 ---@field is_dynamic_test boolean
 ---@field is_suite boolean
@@ -196,5 +196,5 @@ return TestParser
 ---@field test_id integer
 ---@field test_name string
 ---@field unique_id string
----@field result java_test.TestResultExecutionDetails
----@field children java_test.TestResults[]
+---@field result java-test.TestResultExecutionDetails
+---@field children java-test.TestResults[]

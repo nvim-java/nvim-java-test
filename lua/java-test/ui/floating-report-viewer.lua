@@ -3,16 +3,16 @@ local StringBuilder = require('java-test.utils.string-builder')
 local TestStatus = require('java-test.results.result-status')
 local ReportViewer = require('java-test.ui.report-viewer')
 
----@class java_test.FloatingReportViewer
+---@class java-test.FloatingReportViewer
 ---@field window number|nil
 ---@field buffer number|nil
----@overload fun(): java_test.FloatingReportViewer
+---@overload fun(): java-test.FloatingReportViewer
 local FloatingReportViewer = class(ReportViewer)
 
 ---Shows the test results in a floating window
----@param test_results java_test.TestResults[]
-function FloatingReportViewer:show(test_results)
-	---@param results java_test.TestResults[]
+---@param test_results java-test.TestResults[]
+function FloatingReportViewer.show(test_results)
+	---@param results java-test.TestResults[]
 	local function build_result(results, indentation, prefix)
 		local ts = StringBuilder()
 

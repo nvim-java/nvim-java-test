@@ -1,4 +1,4 @@
----@enum java_test.TestStatus
+---@enum java-test.TestStatus
 local TestStatus = {
 	Failed = 'failed',
 	Skipped = 'skipped',
