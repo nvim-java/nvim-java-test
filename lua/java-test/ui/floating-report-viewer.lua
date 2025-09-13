@@ -24,15 +24,11 @@ function FloatingReportViewer:show(test_results)
 			if result.is_suite then
 				tc.append(' ' .. result.test_name).lbreak()
 			else
+				local status = result.result.status or TestStatus.Passed
+				tc.append(status.icon .. result.test_name).lbreak()
 				if result.result.status == TestStatus.Failed then
-					tc.append('󰅙 ' .. result.test_name)
-						.lbreak()
-						.append(indentation)
+					tc.append(indentation)
 						.append(result.result.trace, indentation)
-				elseif result.result.status == TestStatus.Skipped then
-					tc.append(' ' .. result.test_name).lbreak()
-				else
-					tc.append(' ' .. result.test_name).lbreak()
 				end
 			end
 
@@ -52,6 +48,15 @@ function FloatingReportViewer:show(test_results)
 end
 
 function FloatingReportViewer.show_in_window(content)
+	vim.api.nvim_create_autocmd('BufWinEnter', {
+		once = true,
+		callback = function()
+			for _, status in pairs(TestStatus) do
+				vim.fn.matchadd(status.highlight, status.icon)
+			end
+		end
+	})
+
 	local Popup = require('nui.popup')
 	local event = require('nui.utils.autocmd').event
 
@@ -73,6 +78,7 @@ function FloatingReportViewer.show_in_window(content)
 		},
 	})
 
+
 	-- mount/open the component
 	popup:mount()
 
@@ -80,6 +86,8 @@ function FloatingReportViewer.show_in_window(content)
 	popup:on(event.BufLeave, function()
 		popup:unmount()
 	end)
+
+
 
 	-- set content
 	vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, content)
